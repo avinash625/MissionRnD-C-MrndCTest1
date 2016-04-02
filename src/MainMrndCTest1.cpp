@@ -66,10 +66,18 @@ void printSll(struct node *head,int len){
 		}
 	}
 }
-
-void make_it_circular(struct node *head){
-	//Makes a Normal SLL circular ,Make Last->next=head;
-
+void cll_to_sll(struct node *head)
+{
+	struct node *temp = head;
+	while (temp->data <= temp->next->data)
+		temp = temp->next;
+	temp->next = NULL;
+}
+void make_it_circula(struct node *head){
+	struct node *temp = head;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = head;
 }
 
 //End of Helper Functions
@@ -79,7 +87,25 @@ int main(){
 	//Test Sequences
 
 	//Test Circular Linked Lists
+	int nums[5] = { 1, 3, 5 };
+	int nums2[5] = { 2, 4, 6 };
+	//Last 1 is for checking whether A is circular or not .6 should again point to 1
+	int ans[10] = { 1, 2, 3, 4, 5, 6, 1 };
 
+	int l1 = 3, l2 = 3, i;
+	struct node *head1 = NULL;
+	struct node *head2 = NULL;
+	for (i = l1 - 1; i >= 0; i--){
+		addNode(&head1, nums[i]);
+	}
+	for (i = l2 - 1; i >= 0; i--){
+		addNode(&head2, nums2[i]);
+	}
+	make_it_circula(head1);
+	make_it_circula(head2);
+
+	int len = merge_circularlists(&head1, &head2);
+	printf("%d", len);
     //Test Between Days
 	/*
 	int dates[2][8] = { { 0, 2, 0, 4, 2, 0, 1, 6 }, { 0, 4, 0, 4, 2, 0, 1, 6 } };

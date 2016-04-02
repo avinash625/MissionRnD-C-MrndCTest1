@@ -30,8 +30,61 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
+#include<stdbool.h>
+int get(int *arr, int diff, int start, int len)
+{
+	int i, result = 0;
+	for (i = start;i+1 < len && arr[i + 1] - arr[i] == diff; i++)
+	{
+		result = i + 1;
+	}
+	return result;
+}
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+	int *result = (int *)malloc(sizeof(int)* 6);
+	int diff1, diff2;
+	int i, ap, gp;
+	int ab, bc;
+	bool first_ap = false, first_gp = false;
+	if (arr == NULL)
+		return NULL;
+	for (i = 0; i < len - 1; i++)
+	{
+		diff1 = arr[i + 2] - arr[i + 1];
+		diff2 = (arr[i + 1] - arr[i]);
+		ab = arr[i + 1] / arr[i];
+		bc = arr[i + 2] / arr[i + 1];
+		if (diff1 = diff2)
+		{
+
+			if (first_ap == false)
+			{
+				result[0] = i;
+				first_ap = true;
+				result[1] = get(arr, diff1, i, len);
+				i = result[1];
+			}
+			else
+			{
+				result[1] = i;
+				result[2] = get(arr, diff1, i, len);
+				i = result[2];
+			}
+		}
+		else if (ab == bc)
+		{
+			if (first_gp == false)
+			{
+				result[4] = i;
+				first_gp = true;
+				result[5] = i + 2;
+			}
+			else
+			{
+				result[5] = i + 2;
+			}
+		}
+	}
+	return result;
 }
